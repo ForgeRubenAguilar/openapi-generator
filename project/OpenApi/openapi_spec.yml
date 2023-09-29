@@ -1,0 +1,121 @@
+openapi: 3.1.0
+info:
+  title: TEST
+  description: |-
+    ## TEST
+  version: 1.0.0
+
+servers:
+  - url: "http://localhost"
+
+tags:
+  - name: pet tag
+    description: Everything about your Pets
+paths:
+  '/pet/{petId}/oneOf':
+    get:
+      tags:
+        - pet tag
+      summary: Find pet by ID
+      description: Returns a single pet
+      operationId: getPetOneOfById
+      parameters:
+        - name: petId
+          in: path
+          description: ID of pet to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PetOneOf'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Pet not found
+      security:
+        - api_key: []
+  
+  '/pet/{petId}/anyOf':
+    get:
+      tags:
+        - pet tag
+      summary: Find pet by ID
+      description: Returns a single pet
+      operationId: getPetAnyOfById
+      parameters:
+        - name: petId
+          in: path
+          description: ID of pet to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PetAnyOf'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Pet not found
+      security:
+        - api_key: []
+components:
+  schemas:
+    PetOneOf:
+      properties:
+        content:
+          oneOf:
+            - type: string
+            - type: boolean
+            # Generated code uses C# int type to do type checks to set actualInstance, 
+            # but JsonReader gives back C# Int64 regardless of format causing the set to fail during deserialization.
+            # - type: integer
+            #   format: uint8
+            # Generated code uses C# float type to do type checks to set actualInstance, 
+            # but JsonReader gives back C# double regardless of format causing the set to fail.
+            # - type: float
+            #   format: float64
+            # Enums are not nullable. Generated ctor null check for exception setting generate uncompileable code.
+            # - $ref: '#/components/schemas/PetOuterType'
+            - type: object
+              $ref: '#/components/schemas/PetSubId'
+          description: Pet object that needs to be added to the store
+    PetAnyOf:
+      properties:
+        content:
+          anyOf:
+            - type: string
+            - type: boolean
+            # Generated code uses C# int type to do type checks to set actualInstance, 
+            # but JsonReader gives back C# Int64 regardless of format causing the set to fail during deserialization.
+            # - type: integer
+            #   format: uint8
+            # Generated code uses C# float type to do type checks to set actualInstance, 
+            # but JsonReader gives back C# double regardless of format causing the set to fail during deserialization.
+            # - type: float
+            #   format: float64
+            # Enums are not nullable. Generated ctor null check for exception setting generate uncompileable code.
+            # - $ref: '#/components/schemas/PetOuterType'
+            - type: object
+              $ref: '#/components/schemas/PetSubId'
+              
+          description: Pet object that needs to be added to the store
+    PetOuterType:
+      type: "string"
+      enum:
+        - FUR
+        - FEATHERS
+    PetSubId:
+      properties:
+        id:
+          type: string

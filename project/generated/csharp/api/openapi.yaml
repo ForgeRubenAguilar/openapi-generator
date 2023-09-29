@@ -1,0 +1,107 @@
+openapi: 3.1.0
+info:
+  description: '## TEST'
+  title: TEST
+  version: 1.0.0
+servers:
+- url: http://localhost
+tags:
+- description: Everything about your Pets
+  name: pet tag
+paths:
+  /pet/{petId}/oneOf:
+    get:
+      description: Returns a single pet
+      operationId: getPetOneOfById
+      parameters:
+      - description: ID of pet to return
+        explode: false
+        in: path
+        name: petId
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PetOneOf'
+          description: successful operation
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Pet not found
+      security:
+      - api_key: []
+      summary: Find pet by ID
+      tags:
+      - pet tag
+  /pet/{petId}/anyOf:
+    get:
+      description: Returns a single pet
+      operationId: getPetAnyOfById
+      parameters:
+      - description: ID of pet to return
+        explode: false
+        in: path
+        name: petId
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PetAnyOf'
+          description: successful operation
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Pet not found
+      security:
+      - api_key: []
+      summary: Find pet by ID
+      tags:
+      - pet tag
+components:
+  schemas:
+    PetOneOf:
+      example:
+        content: null
+      properties:
+        content:
+          $ref: '#/components/schemas/PetOneOf_content'
+    PetAnyOf:
+      example:
+        content: null
+      properties:
+        content:
+          $ref: '#/components/schemas/PetAnyOf_content'
+    PetOuterType:
+      enum:
+      - FUR
+      - FEATHERS
+      type: string
+    PetSubId:
+      properties:
+        id:
+          type: string
+    PetOneOf_content:
+      description: Pet object that needs to be added to the store
+      oneOf:
+      - type: string
+      - type: boolean
+      - $ref: '#/components/schemas/PetSubId'
+    PetAnyOf_content:
+      anyOf:
+      - type: string
+      - type: boolean
+      - $ref: '#/components/schemas/PetSubId'
+      description: Pet object that needs to be added to the store
+
