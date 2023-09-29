@@ -1,0 +1,25 @@
+{
+  "useDateTimeOffset": true,
+  "returnICollection": true,
+  "validatable": true,
+  "packageName" : "Pets",
+  "outputDir" : "generated/csharp",
+  "inputSpec" : "OpenApi/openapi_spec.yml", 
+  "packageVersion" : "1.1.0",
+  "packageDescription" : "",
+  "packageTitle" : "",
+  "packageCompany" : "Corp,Inc.",
+  "packageAuthors" : "Corp,Inc.",
+  "packageCopyright" : "Corp,Inc.",
+  "generatorName": "csharp",
+  "library": "httpclient",
+  "globalProperties": {
+    "apiTests": false,
+    "modelTests": false
+  },
+  "additionalProperties": {
+    "netCoreProjectFile": true,
+    "packageName": "Pets",
+    "targetFramework": "net6.0"
+  }
+}
